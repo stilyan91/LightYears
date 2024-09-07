@@ -5,12 +5,13 @@
 namespace ly
 {
 
-    Application::Application() : mWindow{sf::VideoMode(800, 600), "Light Years"},
-                                 mTargetFrameRate{60.0f}, 
-                                 mTickClock{}, 
-                                 currentWorld{nullptr} {
-
-                                 };
+    Application::Application(unsigned int wWidth, unsigned int wHeight, const std::string &title, sf::Uint32 style)
+        : mWindow(sf::VideoMode(wWidth, wHeight), title, style),
+          mTargetFrameRate{60.0f},
+          mTickClock{},
+          currentWorld{nullptr}
+    {
+    }
 
     void Application::Run()
     {
@@ -36,8 +37,6 @@ namespace ly
                 RenderInternal();
                 Render();
             }
-            
-
         }
     }
 
@@ -50,25 +49,24 @@ namespace ly
 
     void Application::Render()
     {
-        sf::RectangleShape rect(sf::Vector2f(100, 100));
-        rect.setFillColor(sf::Color::Green);
-        rect.setOrigin(50, 50);
-        rect.setPosition(mWindow.getSize().x / 2.0f, mWindow.getSize().y / 2.0f);
-        mWindow.draw(rect);
+        if(currentWorld)
+        {
+            currentWorld->Render(mWindow);
+        }
     }
 
     void Application::TickInternal(float deltaTime)
     {
         Tick(deltaTime);
 
-        if(currentWorld){
+        if (currentWorld)
+        {
             currentWorld->BeginPlayInternal();
             currentWorld->TickInternal(deltaTime);
         }
     }
-    
+
     void Application::Tick(float deltaTime)
     {
-       
     }
 }

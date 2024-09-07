@@ -1,3 +1,5 @@
+#include <SFML/Graphics.hpp>
+
 #include "framework/World.h"
 #include "framework/Core.h"
 #include "framework/Actor.h"
@@ -10,7 +12,7 @@ namespace ly
           mActors{},
           mpendingActors{}
     {
-        
+
     }
 
     void World::BeginPlayInternal()
@@ -38,7 +40,7 @@ namespace ly
             {
                 iter = mActors.erase(iter);
             } else  {
-                iter->get()->Tick(deltaTime);
+                iter->get()->TickInternal(deltaTime);
                 ++iter;
             }
         }
@@ -61,4 +63,11 @@ namespace ly
         LOG("Tick at frame rate %f", 1.0f / deltaTime);
     }
 
+    void World::Render(sf::RenderWindow &window)
+    {
+        for (auto& actor: mActors)
+        {
+            actor->Render(window);
+        }       
+    }
 }
