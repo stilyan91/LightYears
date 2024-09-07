@@ -1,3 +1,5 @@
+#pragma once
+
 #include <map>
 #include <memory>
 #include <stdio.h>
@@ -22,11 +24,8 @@ namespace ly
     using Map = std::map<keyType, valueType, Pr>;
 
     template<typename keyType, typename valueType, typename haster = std::hash<keyType>>
-    using Dictionary = std::unoredered_map<keyType, valueType, haster>;
-
-    
-
+    using Dictionary = std::unordered_map<keyType, valueType, haster>;
 
     // a MACRO
-    #define LOG(M, ...) printf(M, "\n", ##__VA_ARGS__)
+    #define LOG(M, ...) printf(M "\n", ##__VA_ARGS__)
 }
