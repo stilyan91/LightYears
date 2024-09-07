@@ -1,7 +1,9 @@
 #pragma once
+#include "framework/Core.h"
 
 namespace ly
 {
+    class Actor;
     class Application;
     class World
     {
@@ -9,10 +11,12 @@ namespace ly
         World(Application *owningApp);
 
         void BeginPlayInternal();
-
         void TickInternal(float deltaTime);
 
         virtual ~World();
+
+        template <typename ActorType>
+        weak<ActorType> SpawnActor();
 
     private:
         void BeginPlay();
@@ -20,5 +24,16 @@ namespace ly
 
         Application *mOwmingApp;
         bool mBeginPlay;
+
+        List<shared<Actor>> mActors;
+        List<shared<Actor>> mpendingActors;
     };
+
+    template <typename ActorType>
+    weak<ActorType> World::SpawnActor()
+    {
+        shared<ActorType> newActor{new ActorType(this)};
+        mpendingActors.push_back(newActor);
+        return newActor;
+    }
 }
