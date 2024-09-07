@@ -1,9 +1,11 @@
 #pragma once
+#include "framework/Object.h"
+
 
 namespace ly
 {
     class World;
-    class Actor
+    class Actor : public Object
     {
     public:
         Actor(World *owningWorld);
@@ -11,6 +13,7 @@ namespace ly
         virtual void BeginPlay();
         virtual void Tick(float deltaTime);
 
+        ~Actor();
     private:
         World *mOwningWorld;
         bool mHasBeganPlay; 

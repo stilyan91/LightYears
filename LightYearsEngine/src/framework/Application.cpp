@@ -28,7 +28,7 @@ namespace ly
                 }
             }
             float frameDeltaTime = mTickClock.restart().asSeconds();
-            accumulatedTime += mTickClock.restart().asSeconds();
+            accumulatedTime += frameDeltaTime;
             while (accumulatedTime > targetDeltaTime)
             {
                 accumulatedTime -= targetDeltaTime;

@@ -7,6 +7,12 @@ namespace ly
         : mOwningWorld(owningWorld),
           mHasBeganPlay(false)
     {
+
+    }
+
+    Actor::~Actor()
+    {
+        LOG("Actor Destroyed");
     }
 
     void Actor::BeginPlayInternal()
