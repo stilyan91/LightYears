@@ -29,20 +29,37 @@ namespace ly
             while (accumulatedTime > targetDeltaTime)
             {
                 accumulatedTime -= targetDeltaTime;
-                Tick(targetDeltaTime);
+                TickInternal(targetDeltaTime);
+                RenderInternal();
                 Render();
             }
         }
     }
 
+    void Application::RenderInternal()
+    {
+        mWindow.clear();
+        Render();
+        mWindow.display();
+    }
+
     void Application::Render()
     {
-
+        sf::RectangleShape rect(sf::Vector2f(100, 100));
+        rect.setFillColor(sf::Color::Green);
+        rect.setOrigin(50, 50);
+        rect.setPosition(mWindow.getSize().x / 2.0f, mWindow.getSize().y / 2.0f);
+        mWindow.draw(rect);
     }
 
+    void Application::TickInternal(float deltaTime)
+    {
+        Tick(deltaTime);
+       
+    }
+    
     void Application::Tick(float deltaTime)
     {
-        std::cout << "ticking at framerate: " << 1.f/deltaTime << std::endl;
+       
     }
-
 }
