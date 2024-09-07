@@ -1,7 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-
 namespace ly
 {
     class Application
@@ -9,8 +8,12 @@ namespace ly
     public:
         Application();
         void Run();
-    private:
-        sf::RenderWindow mWindow;
 
+    private:
+        void Tick(float deltaTime);
+        void Render();
+        sf::RenderWindow mWindow;
+        float mTargetFrameRate;
+        sf::Clock mTickClock;
     };
 }
