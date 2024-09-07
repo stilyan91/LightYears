@@ -1,5 +1,4 @@
-#include <iostream>
-
+#include "framework/Core.h"
 #include "framework/Application.h"
 
 namespace ly
@@ -25,6 +24,7 @@ namespace ly
                     mWindow.close();
                 }
             }
+            float frameDeltaTime = mTickClock.restart().asSeconds();
             accumulatedTime += mTickClock.restart().asSeconds();
             while (accumulatedTime > targetDeltaTime)
             {
@@ -33,6 +33,8 @@ namespace ly
                 RenderInternal();
                 Render();
             }
+            LOG("ticking at framerate: %f\n", 1.f / frameDeltaTime);
+
         }
     }
 
