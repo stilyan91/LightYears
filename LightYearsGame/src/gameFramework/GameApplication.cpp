@@ -2,6 +2,8 @@
 #include "framework/World.h"
 #include "framework/Actor.h"
 
+#include "config.h"
+
 ly::Application *GetApplication()
 {
     return new ly::GameApplication();
@@ -10,12 +12,13 @@ ly::Application *GetApplication()
 namespace ly
 {
     GameApplication::GameApplication()
-        : Application(600, 900, "Light Years", sf::Style::Titlebar | sf::Style::Close)
+        : Application(600, 900, "Light Years", sf::Style::Titlebar | sf::Style::Close),
+            counter(0.0f)
     {
         weak<World> newWorld = LoadWorld<World>();
         newWorld.lock()->SpawnActor<Actor>();
         actorToDestroy = newWorld.lock()->SpawnActor<Actor>();
-        actorToDestroy.lock()->SetTexture("/home/stilyan/Projects/LightYears/LightYearsGame/assets/SpaceShooterRedux/PNG/playerShip1_blue.png");
+        actorToDestroy.lock()->SetTexture(GetResourceDir() + "SpaceShooterRedux/PNG/playerShip1_blue.png");
         counter = 0;
     }
 
