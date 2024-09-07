@@ -11,6 +11,8 @@ add_library(${LIGHT_YEARS_ENGINE_TARGET_NAME} STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/framework/Object.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/framework/Object.cpp
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/framework/AssetsManager.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/framework/AssetsManager.cpp
 
     ${CMAKE_CURRENT_SOURCE_DIR}/include/framework/World.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/framework/World.cpp
