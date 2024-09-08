@@ -27,7 +27,10 @@ namespace ly
         float mTargetFrameRate;
         sf::Clock mTickClock;
 
+
         shared<World> currentWorld;
+        sf::Clock mCleanCycleClock;
+        float mCleanCycleInterval;
 
     };
     

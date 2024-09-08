@@ -55,12 +55,12 @@ namespace ly
 
     void World::BeginPlay()
     {
-        LOG("begin play");
+        
     }
 
     void World::Tick(float deltaTime)
     {
-        LOG("Tick at frame rate %f", 1.0f / deltaTime);
+        
     }
 
     void World::Render(sf::RenderWindow &window)

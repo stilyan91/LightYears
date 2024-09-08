@@ -13,6 +13,7 @@ namespace ly
         public:
             static AssetsManager& Get();
             shared<sf::Texture> LoadTexture(const std::string& texturePath);
+            void CleanCycle();
         private:
             static unique<AssetsManager> assetsManager;
             Dictionary<std::string, shared<sf::Texture>> mLoadedTextureMap;

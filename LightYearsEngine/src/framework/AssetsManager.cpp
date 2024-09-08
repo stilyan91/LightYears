@@ -1,4 +1,5 @@
 #include "framework/AssetsManager.h"
+#include "framework/Core.h"
 
 namespace ly
 {   
@@ -6,7 +7,7 @@ namespace ly
 
     AssetsManager::AssetsManager()
     {
-        
+
     }
 
     AssetsManager& AssetsManager::Get()
@@ -34,5 +35,21 @@ namespace ly
         }
 
         return shared<sf::Texture>{nullptr};
+    }
+
+    void AssetsManager::CleanCycle()
+    {
+        for (auto iter = mLoadedTextureMap.begin(); iter != mLoadedTextureMap.end();)
+        {
+            if(iter->second.unique())
+            {
+                LOG("cleaning texture: %s", iter->first.c_str());
+                iter = mLoadedTextureMap.erase(iter);
+            } 
+            else 
+            {
+                ++iter;
+            }
+        }
     }
 }
