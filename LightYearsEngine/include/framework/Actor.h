@@ -32,6 +32,8 @@ namespace ly
 
         sf::Vector2u GetWindowSize() const;
 
+        World* GetWorld() const {return mOwningWorld;}
+        
         ~Actor();
     private:
         World *mOwningWorld;

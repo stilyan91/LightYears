@@ -1,6 +1,7 @@
 #pragma once
 #include "framework/Core.h"
 #include "framework/Application.h"
+#include <utility>
 
 namespace ly
 {
@@ -17,8 +18,8 @@ namespace ly
 
         virtual ~World();
 
-        template <typename ActorType>
-        weak<ActorType> SpawnActor();
+        template <typename ActorType, typename ...Args>
+        weak<ActorType> SpawnActor(Args... args);
 
         sf::Vector2u GetWindowSize() const;
     private:
@@ -32,10 +33,10 @@ namespace ly
         List<shared<Actor>> mpendingActors;
     };
 
-    template <typename ActorType>
-    weak<ActorType> World::SpawnActor()
+    template <typename ActorType,typename ...Args>
+    weak<ActorType> World::SpawnActor(Args... args)
     {
-        shared<ActorType> newActor{new ActorType(this)};
+        shared<ActorType> newActor = std::make_shared<ActorType>(this, std::forward<Args>(args)...);
         mpendingActors.push_back(newActor);
         return newActor;
     }

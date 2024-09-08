@@ -7,7 +7,8 @@ namespace ly
     sf::Vector2f RotationToVector(float rotation)
     {
         float radians = DegreesToRadians(rotation);
-        return sf::Vector2f(cos(radians), sin(radians));
+        // return sf::Vector2f(cos(radians), sin(radians));
+        return sf::Vector2f(sin(radians), -cos(radians));
     }
 
     float DegreesToRadians(float degrees)
