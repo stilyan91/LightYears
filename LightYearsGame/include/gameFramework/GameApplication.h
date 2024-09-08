@@ -2,6 +2,7 @@
 #include "framework/Core.h"
 
 #include <framework/Application.h>
+#include <spaceship/Spaceship.h>
 
 namespace ly 
 {
@@ -13,6 +14,6 @@ namespace ly
             virtual void Tick(float deltaTime) override;
         private:
             float counter;
-            weak<Actor> actorToDestroy;
+            weak<Spaceship> testPlayerSpaceship;
     };
 }
