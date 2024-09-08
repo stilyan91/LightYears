@@ -2,38 +2,37 @@
 #include "framework/Core.h"
 
 namespace ly
-{   
+{
     unique<AssetsManager> AssetsManager::assetsManager = nullptr;
 
-    AssetsManager::AssetsManager()
+    AssetsManager::AssetsManager() : mRootDirectory{}
     {
-
     }
 
-    AssetsManager& AssetsManager::Get()
+    AssetsManager &AssetsManager::Get()
     {
-        if(!assetsManager)
+        if (!assetsManager)
         {
             assetsManager = unique<AssetsManager>{new AssetsManager};
         }
-        return *assetsManager; 
+        return *assetsManager;
     }
 
-    shared<sf::Texture> AssetsManager::LoadTexture(const std::string& texturePath)
+    shared<sf::Texture> AssetsManager::LoadTexture(const std::string &texturePath)
     {
+
         auto found = mLoadedTextureMap.find(texturePath);
-        if(found != mLoadedTextureMap.end())
+        if (found != mLoadedTextureMap.end())
         {
             return found->second;
         }
 
-        shared<sf::Texture> newTexture {new sf::Texture};
-        if(newTexture->loadFromFile(texturePath))
+        shared<sf::Texture> newTexture{new sf::Texture}; 
+        if (newTexture->loadFromFile(mRootDirectory + texturePath))
         {
             mLoadedTextureMap.insert({texturePath, newTexture});
             return newTexture;
         }
-
         return shared<sf::Texture>{nullptr};
     }
 
@@ -41,15 +40,21 @@ namespace ly
     {
         for (auto iter = mLoadedTextureMap.begin(); iter != mLoadedTextureMap.end();)
         {
-            if(iter->second.unique())
+            if (iter->second.unique())
             {
                 LOG("cleaning texture: %s", iter->first.c_str());
                 iter = mLoadedTextureMap.erase(iter);
-            } 
-            else 
+            }
+            else
             {
                 ++iter;
             }
         }
     }
+
+    void AssetsManager::SetAssetsRootDir(const std::string &directory)
+    {
+        mRootDirectory = directory;
+    }
+
 }

@@ -77,5 +77,6 @@ namespace ly
 
     void Application::Tick(float deltaTime)
     {
+        
     }
 }
