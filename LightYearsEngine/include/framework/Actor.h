@@ -3,6 +3,7 @@
 
 #include "framework/Core.h"
 #include "framework/Object.h"
+#include "framework/World.h"
 
 
 namespace ly
@@ -28,6 +29,8 @@ namespace ly
         float GetActorRotation() const;
         sf::Vector2f GetActorForwardDirection() const;
         sf::Vector2f GetActorRightDirection() const;
+
+        sf::Vector2u GetWindowSize() const;
 
         ~Actor();
     private:

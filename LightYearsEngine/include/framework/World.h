@@ -1,5 +1,6 @@
 #pragma once
 #include "framework/Core.h"
+#include "framework/Application.h"
 
 namespace ly
 {
@@ -19,6 +20,7 @@ namespace ly
         template <typename ActorType>
         weak<ActorType> SpawnActor();
 
+        sf::Vector2u GetWindowSize() const;
     private:
         void BeginPlay();
         void Tick(float deltaTime);

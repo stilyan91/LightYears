@@ -15,8 +15,10 @@ namespace ly
             float GetSpeed() const { return mSpeed;}  
         private:
             void HandleInput();
-            sf::Vector2f mMoveInput{};
+            void NormalizeInput();
+            void ClampInputOnEdge();
             void ConsumeInput(float deltaTime);
+            sf::Vector2f mMoveInput{};
             float mSpeed;
     };
 }

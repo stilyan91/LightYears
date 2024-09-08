@@ -79,4 +79,9 @@ namespace ly
     {
         
     }
+
+    sf::Vector2u Application::GetWindwowSize() const
+    {
+        return mWindow.getSize();
+    }
 }

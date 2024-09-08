@@ -27,5 +27,6 @@ namespace ly
 
     void GameApplication::Tick(float deltaTime)
     {
+        
     }
 }

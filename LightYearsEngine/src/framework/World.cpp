@@ -70,4 +70,9 @@ namespace ly
             actor->Render(window);
         }       
     }
+
+    sf::Vector2u World::GetWindowSize() const
+    {
+        return mOwmingApp->GetWindwowSize();
+    }
 }

@@ -112,4 +112,9 @@ namespace ly
         sf::FloatRect bounds = mSprite.getGlobalBounds();
         mSprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
     }
+
+    sf::Vector2u Actor::GetWindowSize() const
+    {
+        return mOwningWorld->GetWindowSize();
+    }
 }

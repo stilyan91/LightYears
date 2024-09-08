@@ -1,5 +1,6 @@
 #include "player/PlayerSpaceship.h"
 #include "SFML/System.hpp"
+#include "framework/MathUtility.h"
 
 namespace ly
 {
@@ -36,11 +37,42 @@ namespace ly
         {
             mMoveInput.x = 1.f;
         }
+        ClampInputOnEdge();
+        NormalizeInput();
     }
 
     void PlayerSpaceship::ConsumeInput(float deltaTime)
     {
         SetVelocity(mMoveInput * GetSpeed());
         mMoveInput.x = mMoveInput.y = 0.f;
+    }
+
+    void PlayerSpaceship::NormalizeInput()
+    {
+        Normalize(mMoveInput);
+        LOG("move input is now %f, %f", mMoveInput.x, mMoveInput.y);    
+    }
+    
+    void PlayerSpaceship::ClampInputOnEdge()
+    {
+        sf::Vector2f actorLoc = GetActorLocation();
+        if(actorLoc.x < 0.f && mMoveInput.x == -1)
+        {
+            mMoveInput.x = 0.f;
+        }
+        if (actorLoc.x > GetWindowSize().x && mMoveInput.x == 1.f)
+        {
+            mMoveInput.x = 0.f;
+        }
+
+        if(actorLoc.y < 0.f && mMoveInput.y == -1.f)
+        {
+            mMoveInput.y = 0.f;
+        }
+
+        if (actorLoc.y > GetWindowSize().y && mMoveInput.y == 1.f)
+        {
+            mMoveInput.y = 0.f;
+        }
     }
 }
