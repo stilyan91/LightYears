@@ -19,11 +19,21 @@ namespace ly
         virtual void BeginPlay();
         virtual void Tick(float deltaTime);
 
+        void SetActorLocation(const sf::Vector2f& newLoc);
+        void SetActorRotation(float newRot);
+        void AddActorLocationOffset(const sf::Vector2f& offsetAmt);
+        void AddActorRatationOffset(float offsetAmt);
+        
+        sf::Vector2f GetActorLocation() const;
+        float GetActorRotation() const;
+        sf::Vector2f GetActorForwardDirection() const;
+        sf::Vector2f GetActorRightDirection() const;
 
         ~Actor();
     private:
         World *mOwningWorld;
         bool mHasBeganPlay; 
+        void CenterPivot();
 
         sf::Sprite mSprite;
         shared<sf::Texture> mTexture;
