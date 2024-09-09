@@ -117,4 +117,42 @@ namespace ly
     {
         return mOwningWorld->GetWindowSize();
     }
+
+     bool Actor::IsActorOutOfWindow() const
+     {
+        float windowWidth = GetWorld()->GetWindowSize().x;
+        float windowHeight = GetWorld()->GetWindowSize().y;
+
+        float width = GetActorGloablBounds().width;
+        float height = GetActorGloablBounds().height;
+        
+        sf::Vector2f actorPos = GetActorLocation();
+        
+        if(actorPos.x < -width)
+        {
+            return true;
+        }
+
+        if(actorPos.x > width + windowWidth)
+        {
+            return true;
+        }
+
+        if(actorPos.y < -height)
+        {
+            return true;
+        }
+
+        if(actorPos.y > height + windowHeight)
+        {
+            return true;
+        }
+
+        return false;
+     }
+
+     sf::FloatRect Actor::GetActorGloablBounds() const
+     {
+        return mSprite.getGlobalBounds();
+     }
 }

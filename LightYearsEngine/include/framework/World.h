@@ -15,7 +15,8 @@ namespace ly
         void BeginPlayInternal();
         void TickInternal(float deltaTime);
         void Render(sf::RenderWindow& window);
-
+        void CleanCycle();
+        
         virtual ~World();
 
         template <typename ActorType, typename ...Args>

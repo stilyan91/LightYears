@@ -29,10 +29,15 @@ namespace ly
         float GetActorRotation() const;
         sf::Vector2f GetActorForwardDirection() const;
         sf::Vector2f GetActorRightDirection() const;
-
         sf::Vector2u GetWindowSize() const;
 
+        sf::FloatRect GetActorGloablBounds() const;
+        
         World* GetWorld() const {return mOwningWorld;}
+
+        bool IsActorOutOfWindow() const;
+
+
         
         ~Actor();
     private:

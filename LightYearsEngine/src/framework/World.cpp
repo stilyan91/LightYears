@@ -12,7 +12,6 @@ namespace ly
           mActors{},
           mpendingActors{}
     {
-
     }
 
     void World::BeginPlayInternal()
@@ -36,13 +35,8 @@ namespace ly
 
         for (auto iter = mActors.begin(); iter != mActors.end();)
         {
-            if(iter->get()->isPendingDestroy())
-            {
-                iter = mActors.erase(iter);
-            } else  {
-                iter->get()->TickInternal(deltaTime);
-                ++iter;
-            }
+            iter->get()->TickInternal(deltaTime);
+            ++iter;
         }
 
         Tick(deltaTime);
@@ -50,29 +44,41 @@ namespace ly
 
     World::~World()
     {
-
     }
 
     void World::BeginPlay()
     {
-        
     }
 
     void World::Tick(float deltaTime)
     {
-        
     }
 
     void World::Render(sf::RenderWindow &window)
     {
-        for (auto& actor: mActors)
+        for (auto &actor : mActors)
         {
             actor->Render(window);
-        }       
+        }
     }
 
     sf::Vector2u World::GetWindowSize() const
     {
         return mOwmingApp->GetWindwowSize();
+    }
+
+    void World::CleanCycle()
+    {
+        for (auto iter = mActors.begin(); iter != mActors.end();)
+        {
+            if (iter->get()->isPendingDestroy())
+            {
+                iter = mActors.erase(iter);
+            }
+            else
+            {
+                ++iter;
+            }
+        }
     }
 }
