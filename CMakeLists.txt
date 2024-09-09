@@ -9,21 +9,12 @@ set(CMAKE_CXX_STANDARD          14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS        OFF)
 
+
+
 #create a variable
 set(LIGHT_YEARS_ENGINE_TARGET_NAME LightYearsEngine)
 set(LIGHT_YEARS_GAME_TARGET_NAME LightYearsGame)
 set(CMAKE_BUILD_TYPE Debug)
-
-set(SFML_LIB_NAME SFML)
-
-include(FetchContent)
-FetchContent_Declare(${SFML_LIB_NAME}
-    GIT_REPOSITORY https://github.com/SFML/SFML
-    GIT_TAG 2.5.1
-    GIT_SHALLOW FALSE)
-
-
-FetchContent_MakeAvailable(${SFML_LIB_NAME})
 
 add_subdirectory(LightYearsEngine)
 add_subdirectory(LightYearsGame)

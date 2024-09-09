@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <box2d/b2_body.h> 
 
 #include "framework/Core.h"
 #include "framework/Object.h"
@@ -37,16 +38,25 @@ namespace ly
 
         bool IsActorOutOfWindow() const;
 
+        b2Body* GetPhysicsBody() const {return mPhysicsBody;}
 
+        void SetEnablePhysics(bool enable);
         
         ~Actor();
     private:
+        void InitializePhysics();
+        void UnInitializePhysics();
+        void UpdatePhysicsTransform();
+        void CenterPivot();
+
         World *mOwningWorld;
         bool mHasBeganPlay; 
-        void CenterPivot();
 
         sf::Sprite mSprite;
         shared<sf::Texture> mTexture;
+        
+        b2Body* mPhysicsBody;
+        bool mPhysicsEnabled;
 
     };
 }

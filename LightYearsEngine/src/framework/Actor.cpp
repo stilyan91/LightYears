@@ -2,6 +2,9 @@
 #include "framework/Core.h"
 #include "framework/AssetsManager.h"
 #include "framework/MathUtility.h"
+#include "framework/PhysicsSystem.h"
+
+#include <box2d/b2_body.h>
 
 namespace ly
 {
@@ -9,7 +12,9 @@ namespace ly
         : mOwningWorld(owningWorld),
           mHasBeganPlay(false),
           mSprite{},
-          mTexture{}
+          mTexture{},
+          mPhysicsBody(nullptr),
+          mPhysicsEnabled(false)
     {
         SetTexture(texturePath);
     }
@@ -118,41 +123,82 @@ namespace ly
         return mOwningWorld->GetWindowSize();
     }
 
-     bool Actor::IsActorOutOfWindow() const
-     {
+    bool Actor::IsActorOutOfWindow() const
+    {
         float windowWidth = GetWorld()->GetWindowSize().x;
         float windowHeight = GetWorld()->GetWindowSize().y;
 
         float width = GetActorGloablBounds().width;
         float height = GetActorGloablBounds().height;
-        
+
         sf::Vector2f actorPos = GetActorLocation();
-        
-        if(actorPos.x < -width)
+
+        if (actorPos.x < -width)
         {
             return true;
         }
 
-        if(actorPos.x > width + windowWidth)
+        if (actorPos.x > width + windowWidth)
         {
             return true;
         }
 
-        if(actorPos.y < -height)
+        if (actorPos.y < -height)
         {
             return true;
         }
 
-        if(actorPos.y > height + windowHeight)
+        if (actorPos.y > height + windowHeight)
         {
             return true;
         }
 
         return false;
-     }
+    }
 
-     sf::FloatRect Actor::GetActorGloablBounds() const
-     {
+    sf::FloatRect Actor::GetActorGloablBounds() const
+    {
         return mSprite.getGlobalBounds();
-     }
+    }
+
+    void Actor::SetEnablePhysics(bool enable)
+    {
+        mPhysicsEnabled = enable;
+        if (mPhysicsEnabled)
+        {
+            InitializePhysics();
+        }
+        else
+        {
+            UnInitializePhysics();
+        }
+    }
+
+    void Actor::InitializePhysics()
+    {
+        if (!mPhysicsBody)
+        {
+            mPhysicsBody = PhysicsSystem::Get().AddListener(this);
+        }
+    }
+
+    void Actor::UnInitializePhysics()
+    {
+        if (mPhysicsBody)
+        {
+            PhysicsSystem::Get().RemoveListener(GetPhysicsBody());
+        }
+    }
+
+    void Actor::UpdatePhysicsTransform()
+    {
+        if (mPhysicsBody)
+        {
+            float physicsScale = PhysicsSystem::Get().GetPhysicsScale();
+            b2Vec2 pos(GetActorLocation().x * physicsScale, GetActorLocation().y * physicsScale);
+            float rotation = DegreesToRadians(GetActorRotation());
+
+            mPhysicsBody->SetTransform(pos, rotation);
+        }
+    }
 }
