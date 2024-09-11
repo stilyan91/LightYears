@@ -163,6 +163,12 @@ namespace ly
         return mSprite.getGlobalBounds();
     }
 
+    void Actor::Destroy() 
+    {
+        UnInitializePhysics();
+        Object::Destroy();
+    }
+
     void Actor::SetEnablePhysics(bool enable)
     {
         mPhysicsEnabled = enable;
@@ -189,6 +195,7 @@ namespace ly
         if (mPhysicsBody)
         {
             PhysicsSystem::Get().RemoveListener(GetPhysicsBody());
+            mPhysicsBody = nullptr;
         }
     }
 

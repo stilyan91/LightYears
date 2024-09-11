@@ -26,7 +26,8 @@ namespace ly
           mPhisicsScale{0.01f},
           mVelocityIterations{8},
           mPositionIterations{3},
-          mContactListener{}
+          mContactListener{},
+          mPendingRemoveListeners{}
     {
         mPhysicsWorld.SetContactListener(&mContactListener);
         mPhysicsWorld.SetAllowSleeping(false);
@@ -34,6 +35,7 @@ namespace ly
 
     void PhysicsSystem::Step(float deltaTime)
     {
+        ProcessPendingRemoveListeners();
         mPhysicsWorld.Step(deltaTime, mVelocityIterations, mPositionIterations);
     }
 
@@ -68,7 +70,8 @@ namespace ly
     }
     void PhysicsSystem::RemoveListener(b2Body *bodyToRemove)
     {
-        // TODO: Implement removal of physics body
+        mPendingRemoveListeners.insert(bodyToRemove);
+
     }
 
     void PhysicsContactListener::BeginContact(b2Contact *contact) 
@@ -112,5 +115,20 @@ namespace ly
         {
             ActorB->OnActorEndOverlap(ActorA);
         }
+    }
+
+    void PhysicsSystem::ProcessPendingRemoveListeners()
+    {
+        for (auto listener : mPendingRemoveListeners)
+        {
+            mPhysicsWorld.DestroyBody(listener);
+        }
+
+        mPendingRemoveListeners.clear();
+    }
+
+    void PhysicsSystem::CleanUp()
+    {
+        phisicsSystem = std::move(unique<PhysicsSystem>{new PhysicsSystem});
     }
 }

@@ -20,16 +20,23 @@ namespace ly
             void Step(float deltaTime);
             b2Body* AddListener(Actor* listener);
             void RemoveListener(b2Body* bodyToRemove);
+            
             float GetPhysicsScale() const {return mPhisicsScale;}
+            
+            static void CleanUp();
+            
         protected:
             PhysicsSystem();
         private:
+            void ProcessPendingRemoveListeners();
             static unique <PhysicsSystem> phisicsSystem;
             b2World mPhysicsWorld;
             float mPhisicsScale;
             int mVelocityIterations;
             int mPositionIterations;
             PhysicsContactListener mContactListener;
+            
+            Set<b2Body*> mPendingRemoveListeners;
 
     };
 
