@@ -41,6 +41,9 @@ namespace ly
         b2Body* GetPhysicsBody() const {return mPhysicsBody;}
 
         void SetEnablePhysics(bool enable);
+
+        virtual void OnActorBeginOverlap(Actor* otherActor);
+        virtual void OnActorEndOverlap(Actor* otherActor);
         
         ~Actor();
     private:
